@@ -1,0 +1,23 @@
+# Prometheus 抓取配置:pull 模型,定时去各 /metrics 端点拉指标。
+# 注意:容器内访问宿主机服务用 host.docker.internal(Linux 需在 compose 加 extra_hosts)。
+
+global:
+  scrape_interval: 5s
+
+scrape_configs:
+  - job_name: prometheus
+    static_configs:
+      - targets: ["localhost:9090"]
+
+  - job_name: dcgm
+    static_configs:
+      - targets: ["dcgm-exporter:9400"]
+
+  # TODO(实验 D): 补全 vLLM 服务的 scrape 配置。
+  #   vllm serve 启动后会在 :8000/metrics 暴露 Prometheus 格式指标
+  #   (TTFT、TPOT、吞吐、running/waiting 队列、KV cache 使用率等)。
+  #   示例:
+  #   - job_name: vllm
+  #     metrics_path: /metrics
+  #     static_configs:
+  #       - targets: ["host.docker.internal:8000"]

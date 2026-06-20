@@ -1,0 +1,37 @@
+# 最小监控栈:Prometheus(拉取+存储) + Grafana(可视化)。
+# dcgm-exporter 提供 GPU 硬件指标(需在有 GPU 的宿主上跑,且装好 NVIDIA Container Toolkit)。
+# 启动:docker compose up -d  然后访问 Grafana http://localhost:3000 (admin/admin)
+
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    depends_on:
+      - prometheus
+
+  # GPU 指标导出器。需要 NVIDIA Container Toolkit;无 GPU 环境可注释掉。
+  dcgm-exporter:
+    image: nvcr.io/nvidia/k8s/dcgm-exporter:latest
+    ports:
+      - "9400:9400"
+    cap_add:
+      - SYS_ADMIN
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]

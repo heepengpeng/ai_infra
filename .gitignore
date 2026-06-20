@@ -1,0 +1,26 @@
+# 虚拟环境与 IDE 配置
+.venv/
+.idea/
+.vscode/
+
+# Python 缓存
+__pycache__/
+*.pyc
+*.pyo
+
+# 编译产物
+*.o
+*.out
+*.exe
+# C++ 示例编译出的可执行文件(与同名 .cpp 源码并存)
+tutorials/module-00-cpp/code/leak_demo
+tutorials/module-00-cpp/code/overload_demo
+tutorials/module-00-cpp/code/pointers_demo
+tutorials/module-00-cpp/code/raii_demo
+tutorials/module-00-cpp/code/stack_heap
+tutorials/module-00-cpp/code/template_demo
+tutorials/module-00-cpp/code/vector_template
+
+# 个人信息,勿入库
+何朋朋简历20260118.pdf
+*.pdf

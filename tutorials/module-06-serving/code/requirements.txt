@@ -1,0 +1,12 @@
+# Module 6 代码依赖。按需安装(不同 lesson 用到不同子集)。
+# Lesson 1 迷你 serving:
+fastapi
+uvicorn
+httpx
+# Lesson 2/3 客户端与多卡(GPU 环境):
+openai
+# vllm                 # Lesson 3 张量并行,GPU 环境单独装:pip install vllm
+# tensorrt-llm         # Lesson 2,GPU 环境单独装:pip install tensorrt-llm -U
+# Lesson 4 压测与画图:
+matplotlib
+locust
